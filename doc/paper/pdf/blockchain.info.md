@@ -1,0 +1,3 @@
+- SHA256 of `paper.TLinFormer.en.pdf` is recorded to(as the input data):
+  - [BscScan Transaction](https://bscscan.com/tx/0x75dc36ea266cbffa798d1ef95ab915fadeaa21c1e9aca723a4ee7ae300657543)
+  - [Etherscan Transaction](https://etherscan.io/tx/0xe62778e7ca8820789c3d62a4659a085ed91baab7330c4c322e5b6ad1396c0d89)

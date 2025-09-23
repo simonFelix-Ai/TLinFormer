@@ -1,0 +1,74 @@
+experiment_name: "BaseLLM_41M_train_len_2K_wikitext-103-v1"
+
+# Model configuration
+model:
+  module: "src.models.base_llm"
+  class: "BaseLLM"
+
+  model_args:
+    vocab_size: 50257 # GPT-2 tokenizer vocab size, adjust as needed
+    n_embd: 432
+    n_head: 12
+    n_transformer_block: 8
+
+    dropout: 0.2
+    rope_precompute_threshold: 32768 # for HybridRotaryEmbedding
+
+# Data configuration
+data:
+  # Hugging Face dataset name
+  # dataset_path: "brando/small-c4-dataset"
+  # dataset_name: NULL
+  # dataset_path: "jxm/gpt-oss20b-samples"
+  # dataset_name: NULL
+  dataset_path: "Salesforce/wikitext"
+  dataset_name: "wikitext-103-v1"
+  dataset_cache_dir: "dataset_cache"
+  tokenizer_name: "gpt2"
+  max_train_seq_len: 2048
+  num_workers: 16
+  validation_ratio: 0.03 # ratio if validation not in datasets
+  packed_dataset_cache:
+    use_cache: true
+    dir: ./dataset_cache/packed_dataset_cache
+
+# Training configuration
+training:
+  optimizer: "AdamW"
+  learning_rate: 3.0e-4
+  weight_decay: 0.06
+  beta1: 0.9
+  beta2: 0.95
+  grad_clip: 1.0
+
+  # Training loop
+  num_train_epochs: 10
+
+  # checkpoints
+  use_checkpoint: False
+
+  # Cache
+  kv_cache_on: False
+
+  #  BATCH_SIZE
+  batch_method: fixed  # auto or fixed
+  profile_memory_batch_size: 3  # only valid when batch_method is auto
+  gpu_memory_limit: 0.79 # only valid when batch_method is auto
+  virtual_train_batch_size: 256  # 梯度累积后的等效size
+  per_device_train_batch_size: 8 # only valid when batch_method is not auto
+  per_device_eval_batch_size: 2 # only valid when batch_method is not auto
+
+  # We can keep the scheduler settings from the base config
+  lr_scheduler_type: "cosine"
+  warmup_steps: 2000
+
+  # Logging and saving
+  logging_steps: 1 # Log every accumulated step
+  save_steps: 1 # SAVE_MODLE_STEPS
+  eval_steps: 1 # evaluate every time we save
+  resume_from_checkpoint: True
+
+# Hardware
+hardware:
+  device: "cuda"
+  compile: False
