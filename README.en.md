@@ -1,3 +1,8 @@
+# Latest Breakthrough
+
+    I have successfully overcome the technical bottleneck of training 1 million tokens in a single pass on a single 16GB VRAM GPU. To clarify, this is not a cumulative total of 1M tokens achieved through small segments (e.g., 512 tokens x N); it is a genuine, simultaneous 1-million-token context in one training step.
+Due to limited personal funding, I am currently unable to scale this research further. If you are interested in providing support or collaborating on large-scale research, please feel free to reach out.
+
 # Design Philosophy
 
 The goal is to achieve linear computational complexity (Linear Complexity) without sacrificing any historical information (Full Context Awareness) or the precision of attention calculations (Exact Attention).
